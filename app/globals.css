@@ -1,26 +1,184 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --bg: #fffdfa;
+  --surface: #ffffff;
+  --border: #f2e2ee;
+  --text: #241b22;
+  --text-muted: #8b7d87;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --pink: #fe81d4;
+  --green: #a4b885;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body), serif;
 }
+
+.font-display {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.font-accent {
+  font-family: "Yuyu", cursive;
+}
+
+.newspaper-body::first-letter {
+  font-family: var(--font-display), sans-serif;
+  font-size: 4.5rem;
+  line-height: 1;
+  float: left;
+  margin-right: 0.15em;
+  margin-top: 0.05em;
+  color: var(--pink);
+}
+
+.newspaper-body {
+  column-rule: 1px solid var(--border);
+}
+
+@keyframes frameIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sketchy-wrap {
+  position: relative;
+  animation: frameIn 0.5s ease-out both;
+  padding: 16px;
+}
+
+.sketchy-edge {
+  position: absolute;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.sketchy-top {
+  top: -2px;
+  left: 16px;
+  right: 16px;
+  width: calc(100% - 32px);
+  height: 24px;
+}
+
+.sketchy-bottom {
+  bottom: -2px;
+  left: 16px;
+  right: 16px;
+  width: calc(100% - 32px);
+  height: 24px;
+}
+
+.sketchy-left {
+  left: -2px;
+  top: 16px;
+  bottom: 16px;
+  height: calc(100% - 32px);
+  width: 24px;
+}
+
+.sketchy-right {
+  right: -2px;
+  top: 16px;
+  bottom: 16px;
+  height: calc(100% - 32px);
+  width: 24px;
+}
+
+.sketchy-frame {
+  position: relative;
+  z-index: 1;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: opacity 0.2s ease;
+}
+
+.back-link:hover {
+  opacity: 0.7;
+}
+
+.back-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.back-link:hover .back-arrow {
+  transform: translateX(-4px);
+}
+
+@keyframes revealLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes revealRight {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.reveal-card {
+  opacity: 0;
+}
+
+.reveal-card.reveal-left.reveal-in {
+  animation: revealLeft 0.6s cubic-bezier(0.22, 0.9, 0.35, 1) forwards;
+}
+
+.reveal-card.reveal-right.reveal-in {
+  animation: revealRight 0.6s cubic-bezier(0.22, 0.9, 0.35, 1) forwards;
+}
+/* @import "tailwindcss";
+
+:root {
+  --bg: #fffdfa;
+  --surface: #ffffff;
+  --border: #f2e2ee;
+  --text: #241b22;
+  --text-muted: #8b7d87;
+
+  --pink: #fe81d4;
+  --green: #a4b885;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body), serif;
+}
+
+.font-display {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.font-accent {
+  font-family: "Yuyu", cursive;
+} */
