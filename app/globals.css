@@ -26,6 +26,284 @@ body {
   font-family: "Yuyu", cursive;
 }
 
+.newspaper-body {
+  column-rule: 1px solid var(--border);
+}
+
+/* Drop cap for the first paragraph (TinyMCE compatible) */
+.newspaper-body > p:first-of-type::first-letter {
+  font-family: var(--font-display), sans-serif;
+  font-size: 4.5rem;
+  line-height: 1;
+  float: left;
+  margin-right: 0.15em;
+  margin-top: 0.05em;
+  color: var(--pink);
+}
+
+/* Rich text styling */
+.newspaper-body p {
+  margin: 0 0 1.5rem;
+}
+
+.newspaper-body h1,
+.newspaper-body h2,
+.newspaper-body h3,
+.newspaper-body h4,
+.newspaper-body h5,
+.newspaper-body h6 {
+  font-family: var(--font-display), sans-serif;
+  color: var(--pink);
+  line-height: 1.2;
+  margin: 2.5rem 0 1rem;
+}
+
+.newspaper-body h1 {
+  font-size: 3rem;
+}
+
+.newspaper-body h2 {
+  font-size: 2.25rem;
+}
+
+.newspaper-body h3 {
+  font-size: 1.8rem;
+}
+
+.newspaper-body h4 {
+  font-size: 1.5rem;
+}
+
+.newspaper-body strong {
+  font-weight: 700;
+}
+
+.newspaper-body em {
+  font-style: italic;
+}
+
+.newspaper-body u {
+  text-decoration: underline;
+}
+
+.newspaper-body a {
+  color: var(--pink);
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
+}
+
+.newspaper-body a:hover {
+  opacity: 0.75;
+}
+
+.newspaper-body ul,
+.newspaper-body ol {
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+}
+
+.newspaper-body li {
+  margin-bottom: 0.5rem;
+}
+
+.newspaper-body blockquote {
+  border-left: 4px solid var(--pink);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.newspaper-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2rem auto;
+  border-radius: 8px;
+}
+
+.newspaper-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 3rem 0;
+}
+
+.newspaper-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+}
+
+.newspaper-body th,
+.newspaper-body td {
+  border: 1px solid var(--border);
+  padding: 0.75rem;
+}
+
+.newspaper-body code {
+  background: #f7f3f6;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.newspaper-body pre {
+  background: #f7f3f6;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+@keyframes frameIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sketchy-wrap {
+  position: relative;
+  animation: frameIn 0.5s ease-out both;
+  padding: 16px;
+}
+
+.sketchy-edge {
+  position: absolute;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.sketchy-top {
+  top: -2px;
+  left: 16px;
+  right: 16px;
+  width: calc(100% - 32px);
+  height: 24px;
+}
+
+.sketchy-bottom {
+  bottom: -2px;
+  left: 16px;
+  right: 16px;
+  width: calc(100% - 32px);
+  height: 24px;
+}
+
+.sketchy-left {
+  left: -2px;
+  top: 16px;
+  bottom: 16px;
+  height: calc(100% - 32px);
+  width: 24px;
+}
+
+.sketchy-right {
+  right: -2px;
+  top: 16px;
+  bottom: 16px;
+  height: calc(100% - 32px);
+  width: 24px;
+}
+
+.sketchy-frame {
+  position: relative;
+  z-index: 1;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: opacity 0.2s ease;
+}
+
+.back-link:hover {
+  opacity: 0.7;
+}
+
+.back-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.back-link:hover .back-arrow {
+  transform: translateX(-4px);
+}
+
+@keyframes revealLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes revealRight {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.reveal-card {
+  opacity: 0;
+}
+
+.reveal-card.reveal-left.reveal-in {
+  animation: revealLeft 0.6s cubic-bezier(0.22, 0.9, 0.35, 1) forwards;
+}
+
+.reveal-card.reveal-right.reveal-in {
+  animation: revealRight 0.6s cubic-bezier(0.22, 0.9, 0.35, 1) forwards;
+}
+
+
+
+
+
+
+/* @import "tailwindcss";
+
+:root {
+  --bg: #fffdfa;
+  --surface: #ffffff;
+  --border: #f2e2ee;
+  --text: #241b22;
+  --text-muted: #8b7d87;
+
+  --pink: #fe81d4;
+  --green: #a4b885;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body), serif;
+}
+
+.font-display {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.font-accent {
+  font-family: "Yuyu", cursive;
+}
+
 .newspaper-body::first-letter {
   font-family: var(--font-display), sans-serif;
   font-size: 4.5rem;
@@ -154,7 +432,7 @@ body {
 
 .reveal-card.reveal-right.reveal-in {
   animation: revealRight 0.6s cubic-bezier(0.22, 0.9, 0.35, 1) forwards;
-}
+} */
 /* @import "tailwindcss";
 
 :root {
