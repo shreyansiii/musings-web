@@ -47,8 +47,9 @@ export default async function PiecePage({
   }
 
   return (
-    <main className="max-w-3xl mx-auto px-6 py-16 relative">
-      {/* Left Navigation */}
+    <main className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-16 relative">
+      {/* Desktop side navigation — only makes sense with room on either
+          side of the article, so it stays lg-and-up only. */}
       <div className="hidden lg:flex flex-col items-start gap-3 fixed left-4 xl:left-10 top-1/2 -translate-y-1/2 z-50">
         <Link
           href="/"
@@ -67,7 +68,6 @@ export default async function PiecePage({
         )}
       </div>
 
-      {/* Right Navigation */}
       {nextPiece && (
         <Link
           href={`/piece/${nextPiece.slug}`}
@@ -77,7 +77,27 @@ export default async function PiecePage({
         </Link>
       )}
 
-      <div className="sketchy-wrap mt-10">
+      {/* Mobile/tablet navigation — below lg the side rail above is
+          hidden, so without this there'd be no way back to the homepage
+          or to the next/previous piece at all on a phone or tablet. */}
+      <div className="lg:hidden flex items-center justify-between gap-3 mb-8">
+        <Link
+          href="/"
+          className="font-display text-xs sm:text-sm tracking-wide px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border-2 border-black bg-black text-white shadow-md transition hover:bg-white hover:text-black whitespace-nowrap"
+        >
+          ← HOME
+        </Link>
+        {piece.genre?.name && (
+          <span
+            className="font-display text-xs sm:text-sm tracking-wide truncate"
+            style={{ color: "var(--text-muted)" }}
+          >
+            {piece.genre.name.toUpperCase()}
+          </span>
+        )}
+      </div>
+
+      <div className="sketchy-wrap mt-4 sm:mt-10">
         <svg
           className="sketchy-edge sketchy-top"
           viewBox="0 0 300 28"
@@ -135,18 +155,18 @@ export default async function PiecePage({
         </svg>
 
         <article
-          className="sketchy-frame px-8 pt-5 pb-8 sm:px-12 sm:pt-6 sm:pb-12"
+          className="sketchy-frame px-5 pt-4 pb-6 sm:px-12 sm:pt-6 sm:pb-12"
           style={{ background: "var(--surface)" }}
         >
           <div
-            className="flex items-center justify-end font-display text-2xl tracking-widest pb-2"
+            className="flex items-center justify-end font-display text-sm sm:text-lg md:text-2xl tracking-widest pb-2"
             style={{ color: "var(--text-muted)" }}
           >
             <span>{dateStr.toUpperCase()}</span>
           </div>
 
           <span
-            className="font-display text-lg tracking-wide px-4 py-2 rounded-full inline-block"
+            className="font-display text-sm sm:text-base md:text-lg tracking-wide px-3 py-1.5 sm:px-4 sm:py-2 rounded-full inline-block"
             style={{
               color: "white",
               background: color,
@@ -157,7 +177,7 @@ export default async function PiecePage({
           </span>
 
           <h1
-            className="font-display text-7xl leading-[1.1] tracking-tight mt-5"
+            className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.15] sm:leading-[1.1] tracking-tight mt-4 sm:mt-5 break-words"
             style={{ color: "var(--pink)" }}
           >
             {piece.title}
@@ -165,7 +185,7 @@ export default async function PiecePage({
 
           {piece.subtitle && (
             <p
-              className="text-xl mt-3"
+              className="text-base sm:text-lg md:text-xl mt-3"
               style={{ color: "var(--text-muted)" }}
             >
               {piece.subtitle}
@@ -176,19 +196,19 @@ export default async function PiecePage({
             <img
               src={piece.cover_image}
               alt={piece.title}
-              className="w-full mt-8 border-2"
+              className="w-full mt-6 sm:mt-8 border-2"
               style={{ borderColor: "var(--border)" }}
             />
           )}
 
           <div
-            className="newspaper-body mt-10 leading-relaxed text-xl"
+            className="newspaper-body mt-8 sm:mt-10 leading-relaxed text-base sm:text-lg md:text-xl break-words"
             style={{ color: "var(--text)" }}
             dangerouslySetInnerHTML={{ __html: piece.body }}
           />
 
           {piece.media_files?.length > 0 && (
-            <div className="mt-12 space-y-6">
+            <div className="mt-10 sm:mt-12 space-y-6">
               {piece.media_files.map((media) => (
                 <div key={media.id}>
                   {media.kind === "image" && (
@@ -209,7 +229,7 @@ export default async function PiecePage({
 
                   {media.caption && (
                     <p
-                      className="font-accent text-lg mt-1"
+                      className="font-accent text-base sm:text-lg mt-1"
                       style={{ color: "var(--text-muted)" }}
                     >
                       {media.caption}
@@ -221,9 +241,279 @@ export default async function PiecePage({
           )}
         </article>
       </div>
+
+      {/* Mobile/tablet prev-next, since the desktop side rail is hidden below lg */}
+      {(previousPiece || nextPiece) && (
+        <div className="lg:hidden flex flex-col sm:flex-row gap-3 mt-8">
+          {previousPiece && (
+            <Link
+              href={`/piece/${previousPiece.slug}`}
+              className="flex-1 font-display text-sm tracking-wide px-5 py-3 rounded-full border-2 border-black bg-black text-white shadow-md transition hover:bg-white hover:text-black text-center truncate"
+            >
+              ← {previousPiece.title}
+            </Link>
+          )}
+          {nextPiece && (
+            <Link
+              href={`/piece/${nextPiece.slug}`}
+              className="flex-1 font-display text-sm tracking-wide px-5 py-3 rounded-full border-2 border-black bg-white text-black shadow-md transition hover:bg-black hover:text-white text-center truncate"
+            >
+              {nextPiece.title} →
+            </Link>
+          )}
+        </div>
+      )}
     </main>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// import Link from "next/link";
+// import { getContentPieceBySlug, getContentPieces } from "@/lib/api";
+// import { genreColor } from "@/lib/genreColor";
+// import { notFound } from "next/navigation";
+
+// export default async function PiecePage({
+//   params,
+// }: {
+//   params: Promise<{ slug: string }>;
+// }) {
+//   const { slug } = await params;
+//   const piece = await getContentPieceBySlug(slug);
+
+//   if (!piece) {
+//     notFound();
+//   }
+
+//   const color = genreColor(piece.genre?.slug ?? "");
+
+//   const dateStr = piece.published_at
+//     ? new Date(piece.published_at).toLocaleDateString("en-US", {
+//         year: "numeric",
+//         month: "long",
+//         day: "numeric",
+//       })
+//     : "UNDATED";
+
+//   let previousPiece: { slug: string; title: string } | null = null;
+//   let nextPiece: { slug: string; title: string } | null = null;
+
+//   if (piece.genre?.slug) {
+//     try {
+//       const genrePieces = await getContentPieces(piece.genre.slug);
+//       const currentIndex = genrePieces.findIndex((p) => p.slug === slug);
+
+//       if (currentIndex > 0) {
+//         previousPiece = genrePieces[currentIndex - 1];
+//       }
+
+//       if (currentIndex !== -1 && currentIndex < genrePieces.length - 1) {
+//         nextPiece = genrePieces[currentIndex + 1];
+//       }
+//     } catch {
+//       previousPiece = null;
+//       nextPiece = null;
+//     }
+//   }
+
+//   return (
+//     <main className="max-w-3xl mx-auto px-6 py-16 relative">
+//       {/* Left Navigation */}
+//       <div className="hidden lg:flex flex-col items-start gap-3 fixed left-4 xl:left-10 top-1/2 -translate-y-1/2 z-50">
+//         <Link
+//           href="/"
+//           className="font-display text-lg tracking-wide px-7 py-3.5 rounded-full border-2 border-black bg-black text-white shadow-md transition hover:bg-white hover:text-black whitespace-nowrap"
+//         >
+//           ← BACK TO HOME
+//         </Link>
+
+//         {previousPiece && (
+//           <Link
+//             href={`/piece/${previousPiece.slug}`}
+//             className="font-display text-lg tracking-wide px-7 py-3.5 rounded-full border-2 border-black bg-black text-white shadow-md transition hover:bg-white hover:text-black whitespace-nowrap"
+//           >
+//             ← PREVIOUS
+//           </Link>
+//         )}
+//       </div>
+
+//       {/* Right Navigation */}
+//       {nextPiece && (
+//         <Link
+//           href={`/piece/${nextPiece.slug}`}
+//           className="hidden lg:block fixed right-4 xl:right-10 top-1/2 -translate-y-1/2 z-50 font-display text-lg tracking-wide px-7 py-3.5 rounded-full border-2 border-black bg-white text-black shadow-md transition hover:bg-black hover:text-white whitespace-nowrap"
+//         >
+//           NEXT ON {piece.genre?.name?.toUpperCase()} →
+//         </Link>
+//       )}
+
+//       <div className="sketchy-wrap mt-10">
+//         <svg
+//           className="sketchy-edge sketchy-top"
+//           viewBox="0 0 300 28"
+//           preserveAspectRatio="none"
+//           fill="none"
+//         >
+//           <path
+//             d="M0,14 C35,3 65,24 100,12 C135,1 165,23 200,10 C230,0 265,20 300,13"
+//             stroke="var(--pink)"
+//             strokeWidth="3"
+//             strokeLinecap="round"
+//           />
+//         </svg>
+
+//         <svg
+//           className="sketchy-edge sketchy-bottom"
+//           viewBox="0 0 300 28"
+//           preserveAspectRatio="none"
+//           fill="none"
+//         >
+//           <path
+//             d="M0,15 C30,26 70,4 105,16 C140,27 170,3 205,15 C240,26 270,5 300,14"
+//             stroke="var(--pink)"
+//             strokeWidth="3"
+//             strokeLinecap="round"
+//           />
+//         </svg>
+
+//         <svg
+//           className="sketchy-edge sketchy-left"
+//           viewBox="0 0 28 300"
+//           preserveAspectRatio="none"
+//           fill="none"
+//         >
+//           <path
+//             d="M14,0 C3,35 24,65 12,100 C1,135 23,165 10,200 C0,230 20,265 13,300"
+//             stroke="var(--pink)"
+//             strokeWidth="3"
+//             strokeLinecap="round"
+//           />
+//         </svg>
+
+//         <svg
+//           className="sketchy-edge sketchy-right"
+//           viewBox="0 0 28 300"
+//           preserveAspectRatio="none"
+//           fill="none"
+//         >
+//           <path
+//             d="M15,0 C26,30 4,70 16,105 C27,140 3,170 15,205 C26,240 5,270 14,300"
+//             stroke="var(--pink)"
+//             strokeWidth="3"
+//             strokeLinecap="round"
+//           />
+//         </svg>
+
+//         <article
+//           className="sketchy-frame px-8 pt-5 pb-8 sm:px-12 sm:pt-6 sm:pb-12"
+//           style={{ background: "var(--surface)" }}
+//         >
+//           <div
+//             className="flex items-center justify-end font-display text-2xl tracking-widest pb-2"
+//             style={{ color: "var(--text-muted)" }}
+//           >
+//             <span>{dateStr.toUpperCase()}</span>
+//           </div>
+
+//           <span
+//             className="font-display text-lg tracking-wide px-4 py-2 rounded-full inline-block"
+//             style={{
+//               color: "white",
+//               background: color,
+//             }}
+//           >
+//             {piece.genre?.name?.toUpperCase()} ·{" "}
+//             {piece.content_type.toUpperCase()}
+//           </span>
+
+//           <h1
+//             className="font-display text-7xl leading-[1.1] tracking-tight mt-5"
+//             style={{ color: "var(--pink)" }}
+//           >
+//             {piece.title}
+//           </h1>
+
+//           {piece.subtitle && (
+//             <p
+//               className="text-xl mt-3"
+//               style={{ color: "var(--text-muted)" }}
+//             >
+//               {piece.subtitle}
+//             </p>
+//           )}
+
+//           {piece.cover_image && piece.content_type !== "video" && (
+//             <img
+//               src={piece.cover_image}
+//               alt={piece.title}
+//               className="w-full mt-8 border-2"
+//               style={{ borderColor: "var(--border)" }}
+//             />
+//           )}
+
+//           <div
+//             className="newspaper-body mt-10 leading-relaxed text-xl"
+//             style={{ color: "var(--text)" }}
+//             dangerouslySetInnerHTML={{ __html: piece.body }}
+//           />
+
+//           {piece.media_files?.length > 0 && (
+//             <div className="mt-12 space-y-6">
+//               {piece.media_files.map((media) => (
+//                 <div key={media.id}>
+//                   {media.kind === "image" && (
+//                     <img
+//                       src={media.file}
+//                       alt={media.caption}
+//                       className="w-full"
+//                     />
+//                   )}
+
+//                   {media.kind === "audio" && (
+//                     <audio controls src={media.file} className="w-full" />
+//                   )}
+
+//                   {media.kind === "video" && (
+//                     <video controls src={media.file} className="w-full" />
+//                   )}
+
+//                   {media.caption && (
+//                     <p
+//                       className="font-accent text-lg mt-1"
+//                       style={{ color: "var(--text-muted)" }}
+//                     >
+//                       {media.caption}
+//                     </p>
+//                   )}
+//                 </div>
+//               ))}
+//             </div>
+//           )}
+//         </article>
+//       </div>
+//     </main>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+
 
 
 
