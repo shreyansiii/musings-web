@@ -1042,7 +1042,13 @@ export default function HomePage() {
 
       <header className="relative mb-6 px-2 sm:px-6 py-6 overflow-hidden">
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10">
-          <div className="relative max-w-full min-h-[150px] sm:min-h-[230px] flex flex-col justify-center">
+          {/* Mobile min-height trimmed from 150px to 100px — it was reserving
+              more vertical space than the title actually needs on narrow
+              screens, which pushed "AN INDEPENDENT MAGAZINE" down and created
+              a large visible gap under the title. Desktop (sm:) height is
+              unchanged since that layout already looked right. See also the
+              matching min-h change inside IntroTitle.tsx itself. */}
+          <div className="relative max-w-full min-h-[100px] sm:min-h-[230px] flex flex-col justify-center">
             {intro === "play" && <KineticIntro />}
             <div
               key={intro}
@@ -1317,8 +1323,6 @@ export default function HomePage() {
     </main>
   );
 }
-
-
 
 
 

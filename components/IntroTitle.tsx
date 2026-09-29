@@ -67,7 +67,11 @@ export default function IntroTitle() {
   }, []);
 
   return (
-    <div className="relative flex items-center justify-center min-h-[7rem] sm:min-h-[8rem]">
+    // Mobile min-height trimmed from 7rem to 5rem — it was reserving more
+    // vertical space than the title actually needs on narrow screens, which
+    // pushed "AN INDEPENDENT MAGAZINE" down and created a big visible gap.
+    // Desktop (sm:) height is unchanged since that layout already looked right.
+    <div className="relative flex items-center justify-center min-h-[5rem] sm:min-h-[8rem]">
       {/* Real title: always in the layout, invisible until the phrase is gone. */}
       <h1
         className="relative z-10 font-accent text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-center break-words"
