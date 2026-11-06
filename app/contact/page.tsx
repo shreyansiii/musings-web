@@ -45,13 +45,13 @@ export default function ContactPage() {
       <div className="fixed top-3 right-3 sm:top-5 sm:right-6 z-50 flex items-center gap-1.5 sm:gap-4">
         <Link
           href="/"
-          className="font-display text-xs sm:text-base tracking-wide px-3 py-1.5 sm:px-6 sm:py-3 rounded-full border-2 border-black bg-white text-black shadow-md transition hover:bg-black hover:text-white whitespace-nowrap"
+          className="font-display text-xs sm:text-base tracking-wide px-3 py-1.5 sm:px-6 sm:py-3 rounded-full border-2 border-white bg-white text-black shadow-md transition hover:bg-black hover:text-white whitespace-nowrap"
         >
           HOME
         </Link>
         <Link
           href="/about"
-          className="font-display text-xs sm:text-base tracking-wide px-3 py-1.5 sm:px-6 sm:py-3 rounded-full border-2 border-black bg-black text-white shadow-md transition hover:bg-white hover:text-black whitespace-nowrap"
+          className="font-display text-xs sm:text-base tracking-wide px-3 py-1.5 sm:px-6 sm:py-3 rounded-full border-2 border-white bg-black text-white shadow-md transition hover:bg-white hover:text-black whitespace-nowrap"
         >
           ABOUT
         </Link>
@@ -73,7 +73,7 @@ export default function ContactPage() {
 
       {status === "success" ? (
         <div
-          className="rounded-3xl border-2 border-black p-6 sm:p-10 text-center"
+          className="rounded-3xl border-2 border-white p-6 sm:p-10 text-center"
           style={{ background: "var(--surface)" }}
         >
           <p className="font-accent text-2xl sm:text-3xl" style={{ color: "var(--text)" }}>
@@ -101,7 +101,7 @@ export default function ContactPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your name"
-              className="w-full font-body text-base sm:text-xl px-5 sm:px-7 py-3.5 sm:py-5 rounded-full border-2 border-black outline-none text-black"
+              className="w-full font-body text-base sm:text-xl px-5 sm:px-7 py-3.5 sm:py-5 rounded-full border-2 border-white bg-transparent text-white placeholder:text-white/50 outline-none transition focus:border-[var(--pink)]"
               disabled={status === "loading"}
             />
           </div>
@@ -119,7 +119,7 @@ export default function ContactPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@email.com"
-              className="w-full font-body text-base sm:text-xl px-5 sm:px-7 py-3.5 sm:py-5 rounded-full border-2 border-black outline-none text-black"
+              className="w-full font-body text-base sm:text-xl px-5 sm:px-7 py-3.5 sm:py-5 rounded-full border-2 border-white bg-transparent text-white placeholder:text-white/50 outline-none transition focus:border-[var(--pink)]"
               disabled={status === "loading"}
             />
           </div>
@@ -137,7 +137,7 @@ export default function ContactPage() {
               onChange={(e) => setMessage(e.target.value)}
               placeholder="What's on your mind?"
               rows={7}
-              className="w-full font-body text-base sm:text-xl px-5 sm:px-7 py-4 sm:py-6 rounded-3xl border-2 border-black outline-none text-black resize-none"
+              className="w-full font-body text-base sm:text-xl px-5 sm:px-7 py-4 sm:py-6 rounded-3xl border-2 border-white bg-transparent text-white placeholder:text-white/50 outline-none transition focus:border-[var(--pink)] resize-none"
               disabled={status === "loading"}
             />
           </div>
@@ -151,7 +151,7 @@ export default function ContactPage() {
           <button
             type="submit"
             disabled={status === "loading"}
-            className="font-display text-sm sm:text-base tracking-wide px-6 sm:px-8 py-3 sm:py-4 rounded-full border-2 border-black bg-black text-white transition hover:bg-white hover:text-black disabled:opacity-50 self-start"
+            className="font-display text-sm sm:text-base tracking-wide px-6 sm:px-8 py-3 sm:py-4 rounded-full border-2 border-white bg-white text-black transition hover:bg-black hover:text-white disabled:opacity-50 self-start"
           >
             {status === "loading" ? "SENDING…" : "SEND MESSAGE"}
           </button>
@@ -160,6 +160,177 @@ export default function ContactPage() {
     </main>
   );
 }
+
+
+
+
+
+
+
+
+
+// "use client";
+
+// import { useState } from "react";
+// import Link from "next/link";
+
+// export default function ContactPage() {
+//   const [name, setName] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [message, setMessage] = useState("");
+//   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
+//     "idle"
+//   );
+
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     if (!name.trim() || !email.trim() || !message.trim() || status === "loading")
+//       return;
+
+//     setStatus("loading");
+//     try {
+//       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact/`, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({
+//           name: name.trim(),
+//           email: email.trim(),
+//           message: message.trim(),
+//         }),
+//       });
+
+//       if (!res.ok) throw new Error("Request failed");
+
+//       setStatus("success");
+//       setName("");
+//       setEmail("");
+//       setMessage("");
+//     } catch {
+//       setStatus("error");
+//     }
+//   };
+
+//   return (
+//     <main className="max-w-3xl mx-auto px-4 sm:px-6 pt-28 sm:pt-24 pb-16 sm:pb-24">
+//       {/* Top-right nav: Home + About — sized down on mobile so it never overflows */}
+//       <div className="fixed top-3 right-3 sm:top-5 sm:right-6 z-50 flex items-center gap-1.5 sm:gap-4">
+//         <Link
+//           href="/"
+//           className="font-display text-xs sm:text-base tracking-wide px-3 py-1.5 sm:px-6 sm:py-3 rounded-full border-2 border-black bg-white text-black shadow-md transition hover:bg-black hover:text-white whitespace-nowrap"
+//         >
+//           HOME
+//         </Link>
+//         <Link
+//           href="/about"
+//           className="font-display text-xs sm:text-base tracking-wide px-3 py-1.5 sm:px-6 sm:py-3 rounded-full border-2 border-black bg-black text-white shadow-md transition hover:bg-white hover:text-black whitespace-nowrap"
+//         >
+//           ABOUT
+//         </Link>
+//       </div>
+
+//       <h1
+//         className="font-accent text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-4 sm:mb-6 break-words"
+//         style={{ color: "var(--green)" }}
+//       >
+//         Contact
+//       </h1>
+//       <p
+//         className="font-body text-base sm:text-lg md:text-xl leading-relaxed mb-8 sm:mb-12"
+//         style={{ color: "var(--text-muted)" }}
+//       >
+//         Got a pitch, a piece to share, or just want to say hi? Drop a note
+//         below.
+//       </p>
+
+//       {status === "success" ? (
+//         <div
+//           className="rounded-3xl border-2 border-black p-6 sm:p-10 text-center"
+//           style={{ background: "var(--surface)" }}
+//         >
+//           <p className="font-accent text-2xl sm:text-3xl" style={{ color: "var(--text)" }}>
+//             Message sent!
+//           </p>
+//           <p
+//             className="font-body text-base sm:text-lg mt-3"
+//             style={{ color: "var(--text-muted)" }}
+//           >
+//             Thanks for reaching out — we'll get back to you soon.
+//           </p>
+//         </div>
+//       ) : (
+//         <form onSubmit={handleSubmit} className="flex flex-col gap-5 sm:gap-7">
+//           <div>
+//             <label
+//               className="block font-display text-base sm:text-lg tracking-wide mb-2 sm:mb-3"
+//               style={{ color: "var(--text)" }}
+//             >
+//               NAME
+//             </label>
+//             <input
+//               type="text"
+//               required
+//               value={name}
+//               onChange={(e) => setName(e.target.value)}
+//               placeholder="Your name"
+//               className="w-full font-body text-base sm:text-xl px-5 sm:px-7 py-3.5 sm:py-5 rounded-full border-2 border-black outline-none text-black"
+//               disabled={status === "loading"}
+//             />
+//           </div>
+
+//           <div>
+//             <label
+//               className="block font-display text-base sm:text-lg tracking-wide mb-2 sm:mb-3"
+//               style={{ color: "var(--text)" }}
+//             >
+//               EMAIL
+//             </label>
+//             <input
+//               type="email"
+//               required
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               placeholder="you@email.com"
+//               className="w-full font-body text-base sm:text-xl px-5 sm:px-7 py-3.5 sm:py-5 rounded-full border-2 border-black outline-none text-black"
+//               disabled={status === "loading"}
+//             />
+//           </div>
+
+//           <div>
+//             <label
+//               className="block font-display text-base sm:text-lg tracking-wide mb-2 sm:mb-3"
+//               style={{ color: "var(--text)" }}
+//             >
+//               MESSAGE
+//             </label>
+//             <textarea
+//               required
+//               value={message}
+//               onChange={(e) => setMessage(e.target.value)}
+//               placeholder="What's on your mind?"
+//               rows={7}
+//               className="w-full font-body text-base sm:text-xl px-5 sm:px-7 py-4 sm:py-6 rounded-3xl border-2 border-black outline-none text-black resize-none"
+//               disabled={status === "loading"}
+//             />
+//           </div>
+
+//           {status === "error" && (
+//             <p className="text-red-500 text-sm sm:text-base font-body">
+//               Something went wrong. Please try again.
+//             </p>
+//           )}
+
+//           <button
+//             type="submit"
+//             disabled={status === "loading"}
+//             className="font-display text-sm sm:text-base tracking-wide px-6 sm:px-8 py-3 sm:py-4 rounded-full border-2 border-black bg-black text-white transition hover:bg-white hover:text-black disabled:opacity-50 self-start"
+//           >
+//             {status === "loading" ? "SENDING…" : "SEND MESSAGE"}
+//           </button>
+//         </form>
+//       )}
+//     </main>
+//   );
+// }
 
 
 
